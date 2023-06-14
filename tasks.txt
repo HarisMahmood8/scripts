@@ -1,0 +1,5 @@
+Anthony's approach uses Test case objects, so a prespecified and defined test case object with attributes such as environment, original path, new path, tcid, feature. As the reading process occurs, these aspects of each test case are determined and stored, so the final list produced in this stage has each test case object with all of this info stored.
+
+For the processing stage, we would start with this list and begin checking for duplicates and determining which to keep based on environment precedence and then deleting the ones we are not keeping. In this process, the list will get shorter. We will also be checking for the name to work as a file name, so checking for special characters and length. 
+
+After the processing stage, the remaining test cases in the list will be written to files in their corresponding directory/folder

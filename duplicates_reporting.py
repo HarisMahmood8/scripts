@@ -1,3 +1,20 @@
+def generate_full(directory):
+    file_paths = get_cases(directory)
+    
+    Test_Cases = []
+    Data_Frames = []
+    for i in file_paths:
+        input_data = i
+        new_folder = find_new_path(input_data)
+        test_cases, dataFrame = test_case_generator(input_data, new_folder)
+        Test_Cases += test_cases
+        Data_Frames.append(dataFrame)
+
+    df = pd.concat(Data_Frames)
+    
+    return Test_Cases, df
+
+
 from Reading_files import generate_full
 import pandas as pd
 from config import environment_precedence

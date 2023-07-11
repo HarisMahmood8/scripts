@@ -6,8 +6,11 @@ def create_test_case_files(test_cases):
         os.makedirs(directory_path)
 
     for test_case in test_cases:
+        # Truncate the file name if it exceeds 256 characters
+        truncated_name = test_case.name[:252] if len(test_case.name) > 256 else test_case.name
+
         # Create the file path
-        file_name = f"{test_case.name}.json"
+        file_name = f"{truncated_name}.json"
         file_path = os.path.join(directory_path, file_name)
 
         # Write the test case data to the file
@@ -15,13 +18,3 @@ def create_test_case_files(test_cases):
             json.dump(test_case.case_data, f)
 
         print(f"File created: {file_path}")
-
-if __name__ == "__main__":
-    Test_Cases, df = generate_full(environment_precedence)
-
-    unique_cases, df = remove_duplicates(Test_Cases)
-
-    print(f"Number of Unique Test Cases: {len(unique_cases)}")
-    df.to_csv("./Duplicates_Report.csv", index=False)
-
-    create_test_case_files(unique_cases)

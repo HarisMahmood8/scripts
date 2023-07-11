@@ -1,6 +1,3 @@
-import os
-import json
-
 def create_test_case_files(test_cases):
     directory_path = 'test-data1'
 
@@ -9,8 +6,14 @@ def create_test_case_files(test_cases):
         os.makedirs(directory_path)
 
     for test_case in test_cases:
-        # Truncate the directory path and file name if necessary
-        truncated_path, truncated_name = truncate_path_and_file_name(directory_path, test_case.name, 256)
+        # Truncate the file name if it exceeds 256 characters
+        truncated_name = truncate_string(test_case.name, 256)
+
+        # Create the subdirectory path by joining the directory path and truncated name
+        subdir_path = os.path.join(directory_path, truncated_name)
+
+        # Truncate the subdirectory path if it exceeds 256 characters
+        truncated_path = truncate_string(subdir_path, 256)
 
         # Create the subdirectory if it doesn't exist
         if not os.path.exists(truncated_path):
@@ -25,17 +28,8 @@ def create_test_case_files(test_cases):
 
         print(f"File created: {file_path}")
 
-
-def truncate_path_and_file_name(directory_path, file_name, max_length):
-    # Calculate the maximum allowed length for the directory path and the file name
-    max_dir_length = max_length - len(file_name) - len(os.sep) - 5  # Subtracting room for separators and extension
-
-    # Truncate the directory path if it exceeds the maximum length
-    truncated_path = directory_path[:max_dir_length]
-
-    # Truncate the file name if it exceeds the maximum length
-    truncated_name = file_name[:max_length]
-
-    # Return the truncated directory path and file name
-    return truncated_path, truncated_name
-
+def truncate_string(string, max_length):
+    # Truncate the string if it exceeds the maximum length
+    if len(string) > max_length:
+        return string[:max_length]
+    return string

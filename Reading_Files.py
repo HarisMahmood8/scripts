@@ -5,6 +5,17 @@ import string
 import pandas as pd
 from config import environment_precedence
 
+
+class TestCase:
+    def __init__(self, name, environment, old_path, new_path, case_data, error, duplicate):
+        self.name = name
+        self.environment = environment
+        self.old_path = old_path
+        self.new_path = new_path
+        self.case_data = case_data
+        self.error = error
+        self.duplicate= duplicate
+
 def cleaning_up_special_characters(name, length_of_path):
     error = None
     cleaned_name = name.replace(" ", "_")
